@@ -1,0 +1,202 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:testsdk/services/auth_service.dart';
+import 'package:testsdk/widgets/app_drawer.dart';
+
+class HomePage extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
+  // Mock data for stats - replace with actual data from your backend
+  final int totalShots = 150;
+  final int dailyStreak = 5;
+  final int perfectShotForms = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = _authService.currentUser;
+    String userName = user != null ? user.email!.split('@')[0] : 'Player';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('SharpShooter', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.deepOrange,
+        elevation: 0,
+      ),
+      drawer: AppDrawer(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.deepOrange, Colors.orange.shade300],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildWelcomeSection(userName),
+              _buildGeneralStats(),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: _buildFeatureGrid(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection(String userName) {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome back,',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          Text(
+            userName,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Ready to improve your game?',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontSize: 16.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGeneralStats() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildStatItem(Icons.sports_basketball, totalShots, 'Total Shots'),
+          _buildStatItem(Icons.local_fire_department, dailyStreak, 'Day Streak'),
+          _buildStatItem(Icons.thumb_up, perfectShotForms, 'Perfect Forms'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(IconData icon, int value, String label) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.deepOrange, size: 32),
+        SizedBox(height: 8),
+        Text(
+          value.toString(),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.black54,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureGrid(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      padding: const EdgeInsets.all(20.0),
+      mainAxisSpacing: 20.0,
+      crossAxisSpacing: 20.0,
+      children: [
+        _buildFeatureCard(context, 'Upload Shot', Icons.camera_alt, Colors.blue),
+        _buildFeatureCard(context, 'Shot History', Icons.history, Colors.green),
+        _buildFeatureCard(context, 'Progress Tracker', Icons.trending_up, Colors.purple),
+        _buildFeatureCard(context, 'Pro Comparison', Icons.compare_arrows, Colors.red),
+      ],
+    );
+  }
+
+  Widget _buildFeatureCard(BuildContext context, String title, IconData icon, Color color) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.2),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: InkWell(
+        onTap: () {
+          // Navigate to the respective screen
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 40.0, color: color),
+            ),
+            SizedBox(height: 12.0),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

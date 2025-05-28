@@ -1,0 +1,199 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:testsdk/services/auth_service.dart';
+
+class HomePage extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
+  final int totalShots = 150;
+  final int dailyStreak = 5;
+  final int perfectShotForms = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = _authService.currentUser;
+    String userName = user != null ? user.email!.split('@')[0] : 'Player';
+
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      body: CustomScrollView(
+        slivers: [
+          _buildAppBar(userName),
+          SliverToBoxAdapter(child: _buildWelcomeCard()),
+          SliverToBoxAdapter(child: _buildStatsCard()),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            sliver: _buildFeatureGrid(),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Action to record new shot
+        },
+        child: Icon(Icons.add_a_photo),
+        backgroundColor: Colors.orange,
+      ),
+    );
+  }
+
+  Widget _buildAppBar(String userName) {
+    return SliverAppBar(
+      expandedHeight: 200.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text('SharpShooter Hub'),
+        background: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.indigo, Colors.blue],
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    userName[0].toUpperCase(),
+                    style: TextStyle(fontSize: 36, color: Colors.indigo),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Welcome back, $userName!',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeCard() {
+    return Card(
+      margin: EdgeInsets.all(16),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Ready to improve your game?',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Record a new shot or review your progress below.',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatsCard() {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              '$totalShots',
+              style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo),
+            ),
+            Text('Total Shots',
+                style: TextStyle(fontSize: 18, color: Colors.grey[600])),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildStatItem(
+                    dailyStreak, 'Day Streak', Icons.local_fire_department),
+                _buildStatItem(
+                    perfectShotForms, 'Perfect Forms', Icons.thumb_up),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatItem(int value, String label, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, size: 24, color: Colors.indigo),
+        SizedBox(height: 4),
+        Text('$value',
+            style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.indigo)),
+        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+      ],
+    );
+  }
+
+  Widget _buildFeatureGrid() {
+    final List<Map<String, dynamic>> features = [
+      {'icon': Icons.history, 'title': 'Shot History', 'color': Colors.green},
+      {'icon': Icons.trending_up, 'title': 'Progress', 'color': Colors.orange},
+      {'icon': Icons.compare_arrows, 'title': 'Compare', 'color': Colors.red},
+      {
+        'icon': Icons.emoji_events,
+        'title': 'Achievements',
+        'color': Colors.purple
+      },
+    ];
+
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.5,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final feature = features[index];
+          return Card(
+            color: feature['color'],
+            child: InkWell(
+              onTap: () {
+                // Navigate to feature
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(feature['icon'], size: 40, color: Colors.white),
+                  SizedBox(height: 8),
+                  Text(
+                    feature['title'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        childCount: features.length,
+      ),
+    );
+  }
+}

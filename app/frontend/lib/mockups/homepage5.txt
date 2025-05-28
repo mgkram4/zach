@@ -1,0 +1,229 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:testsdk/services/auth_service.dart';
+
+class HomePage extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
+  final int totalShots = 150;
+  final int dailyStreak = 5;
+  final int perfectShotForms = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = _authService.currentUser;
+    String userName = user != null ? user.email!.split('@')[0] : 'Player';
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: CustomScrollView(
+        slivers: [
+          _buildAppBar(userName),
+          SliverToBoxAdapter(child: _buildDailyChallenge()),
+          SliverToBoxAdapter(child: _buildQuickStats()),
+          SliverToBoxAdapter(child: _buildFeatureCards()),
+          SliverToBoxAdapter(child: _buildRecentActivity()),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Action to record new shot
+        },
+        child: Icon(Icons.add, color: Colors.black),
+        backgroundColor: Colors.amber,
+      ),
+    );
+  }
+
+  Widget _buildAppBar(String userName) {
+    return SliverAppBar(
+      expandedHeight: 120.0,
+      floating: false,
+      pinned: true,
+      backgroundColor: Colors.black,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text('SharpShooter Hub',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        background: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.amber, Colors.deepOrange],
+            ),
+          ),
+        ),
+      ),
+      actions: [
+        CircleAvatar(
+          backgroundColor: Colors.white24,
+          child: Text(userName[0].toUpperCase(),
+              style: TextStyle(color: Colors.white)),
+        ),
+        SizedBox(width: 20),
+      ],
+    );
+  }
+
+  Widget _buildDailyChallenge() {
+    return Container(
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Daily Challenge',
+              style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Text('Make 50 three-pointers',
+              style: TextStyle(color: Colors.white, fontSize: 16)),
+          SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: 0.6,
+            backgroundColor: Colors.grey[800],
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+          ),
+          SizedBox(height: 8),
+          Text('30/50 completed', style: TextStyle(color: Colors.grey[400])),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickStats() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildStatCard('Total Shots', totalShots, Icons.sports_basketball),
+          _buildStatCard(
+              'Day Streak', dailyStreak, Icons.local_fire_department),
+          _buildStatCard('Perfect Forms', perfectShotForms, Icons.thumb_up),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatCard(String label, int value, IconData icon) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      width: 110,
+      margin: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.amber, size: 20),
+          SizedBox(height: 4),
+          Text(
+            '$value',
+            style: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            label,
+            style: TextStyle(color: Colors.grey[400], fontSize: 10),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureCards() {
+    return Container(
+      height: 200,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.all(16),
+        children: [
+          _buildFeatureCard('Shot Analysis', Icons.analytics, Colors.blue),
+          _buildFeatureCard(
+              'Training Plans', Icons.fitness_center, Colors.green),
+          _buildFeatureCard('Leaderboard', Icons.leaderboard, Colors.purple),
+          _buildFeatureCard('Pro Comparisons', Icons.compare, Colors.red),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureCard(String title, IconData icon, Color color) {
+    return Container(
+      width: 160,
+      margin: EdgeInsets.only(right: 16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: 48),
+          SizedBox(height: 16),
+          Text(title,
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentActivity() {
+    return Container(
+      margin: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Recent Activity',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+          SizedBox(height: 16),
+          _buildActivityItem('Completed 30 three-pointers', '2 hours ago'),
+          _buildActivityItem('Achieved perfect form', 'Yesterday'),
+          _buildActivityItem('Started new training plan', '3 days ago'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActivityItem(String activity, String time) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              shape: BoxShape.circle,
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(activity, style: TextStyle(color: Colors.white)),
+                Text(time,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

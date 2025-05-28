@@ -1,0 +1,16 @@
+Flask==2.3.2
+Flask-CORS==3.0.10
+requests==2.31.0
+firebase-admin==6.2.0
+google-cloud-firestore==2.11.1
+mediapipe==0.10.14
+opencv-python==4.8.0.76
+Pillow==10.0.0
+gunicorn==21.2.0
+python-dotenv==1.0.0
+Werkzeug==2.3.6
+scikit-learn==1.0.2
+joblib==1.1.0
+
+
+# source myenv/bin/activate

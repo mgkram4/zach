@@ -1,0 +1,151 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:testsdk/services/auth_service.dart';
+import 'package:testsdk/widgets/app_drawer.dart';
+
+class HomePage extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
+  final int totalShots = 150;
+  final int dailyStreak = 5;
+  final int perfectShotForms = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = _authService.currentUser;
+    String userName = user != null ? user.email!.split('@')[0] : 'Player';
+
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        title: Text('SharpShooter', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.teal,
+        elevation: 0,
+      ),
+      drawer: AppDrawer(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildWelcomeSection(userName),
+            _buildGeneralStats(),
+            _buildFeatureSection(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection(String userName) {
+    return Container(
+      padding: EdgeInsets.all(24),
+      color: Colors.teal,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome back,',
+            style: TextStyle(fontSize: 18, color: Colors.white70),
+          ),
+          Text(
+            userName,
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Ready to improve your game?',
+            style: TextStyle(fontSize: 16, color: Colors.white70),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGeneralStats() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 24),
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildStatItem(Icons.sports_basketball, totalShots, 'Total Shots'),
+          _buildStatItem(Icons.local_fire_department, dailyStreak, 'Day Streak'),
+          _buildStatItem(Icons.thumb_up, perfectShotForms, 'Perfect Forms'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(IconData icon, int value, String label) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.teal, size: 32),
+        SizedBox(height: 8),
+        Text(
+          value.toString(),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
+        ),
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureSection(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Features',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey[800]),
+          ),
+          SizedBox(height: 16),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            children: [
+              _buildFeatureCard(context, 'Upload Shot', Icons.camera_alt, Colors.blue),
+              _buildFeatureCard(context, 'Shot History', Icons.history, Colors.green),
+              _buildFeatureCard(context, 'Progress Tracker', Icons.trending_up, Colors.purple),
+              _buildFeatureCard(context, 'Pro Comparison', Icons.compare_arrows, Colors.red),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureCard(BuildContext context, String title, IconData icon, Color color) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: InkWell(
+        onTap: () {
+          // Navigate to the respective screen
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 48, color: color),
+              SizedBox(height: 12),
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey[800]),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

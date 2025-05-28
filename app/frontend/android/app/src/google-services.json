@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "17493959347",
+    "project_id": "hooper-proj",
+    "storage_bucket": "hooper-proj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17493959347:android:ef4bcaa6929806751346c6",
+        "android_client_info": {
+          "package_name": "com.example.testsdk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrc0e3rjOY7P82CrJ_6CBpuxKGycKsUys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17493959347:android:3da5ac3fd1a269391346c6",
+        "android_client_info": {
+          "package_name": "com.hooperapp.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrc0e3rjOY7P82CrJ_6CBpuxKGycKsUys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

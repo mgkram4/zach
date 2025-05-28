@@ -1,0 +1,52 @@
+# General
+.DS_Store
+*.log
+*.pot
+*.swo
+*.swp
+*~
+
+# IDE specific
+.idea/
+.vscode/
+*.iml
+
+# Python backend specific
+app/backend/__pycache__/
+app/backend/*.pyc
+app/backend/new_myenv/
+app/backend/uploads/
+app/backend/get-pip.py
+app/backend/.DS_Store
+
+# Flutter frontend specific
+app/frontend/build/
+app/frontend/.dart_tool/
+app/frontend/.flutter-plugins
+app/frontend/.flutter-plugins-dependencies
+app/frontend/ios/Pods/
+app/frontend/ios/.symlinks/
+app/frontend/ios/Flutter/App.framework
+app/frontend/ios/Flutter/engine
+app/frontend/ios/Flutter/flutter_assets/
+app/frontend/ios/Runner/GeneratedPluginRegistrant.*
+app/frontend/ios/.generated/
+app/frontend/android/.gradle/
+app/frontend/android/gradle/
+app/frontend/android/local.properties
+app/frontend/linux/flutter/ephemeral/
+app/frontend/macos/Flutter/ephemeral/
+app/frontend/windows/flutter/ephemeral/
+app/frontend/web/
+app/frontend/.metadata
+app/frontend/testsdk.iml
+
+# If you have specific files within frontend/lib or frontend/images you want to ignore,
+# add them here. For example:
+# app/frontend/lib/generated_plugin_registrant.dart
+# app/frontend/images/large_image.png
+
+# Node modules (if any JS is used, e.g. in web part of Flutter)
+node_modules/
+npm-debug.log
+yarn-error.log

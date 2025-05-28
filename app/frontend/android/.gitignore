@@ -1,0 +1,18 @@
+# Gradle files
+.gradle/
+gradle-wrapper.jar
+/captures/
+/gradlew
+/gradlew.bat
+/local.properties
+
+# Flutter/Dart specific
+**/GeneratedPluginRegistrant.java
+
+# Keystore files
+key.properties
+**/*.keystore
+**/*.jks
+
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app

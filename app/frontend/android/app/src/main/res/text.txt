@@ -1,0 +1,8 @@
+# In your project's root directory
+flutter clean
+
+# Then in the iOS directory
+cd ios
+rm -rf Pods
+rm -rf Podfile.lock
+pod cache clean --all
