@@ -79,6 +79,34 @@ class AppDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),
+          _buildDrawerItem(
+            context,
+            icon: Icons.delete,
+            text: 'Delete Account',
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Delete Account'),
+                  content: Text('Are you sure you want to delete your account?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await _authService.deleteUser();
+                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: Text('Delete'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

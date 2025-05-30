@@ -51,6 +51,14 @@ class AuthService {
     await _firebaseAuth.signOut();
   }
 
+  Future<void> deleteUser() async {
+    User? user = currentUser;
+    if (user != null) {
+      await _firebaseAuth.currentUser?.delete();
+      await _firestore.collection('users').doc(user.uid).delete();
+    }
+  }
+
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
   User? get currentUser => _firebaseAuth.currentUser;
 

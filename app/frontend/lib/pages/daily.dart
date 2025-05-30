@@ -6,7 +6,7 @@ class DailyChallengesPage extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  const DailyChallengesPage({super.key});
+  DailyChallengesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
