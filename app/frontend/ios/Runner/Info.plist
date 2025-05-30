@@ -45,5 +45,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses your camera to analyze your basketball shooting movements.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app uses your photo library to analyze your basketball shooting movements.</string>
 </dict>
 </plist>
