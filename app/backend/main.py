@@ -10,6 +10,10 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "uploads"
 
+@app.route("/")
+def hello_world():
+    return "Hello, World!"
+
 def create_upload_bp(calculator):
     upload_bp = Blueprint("upload_bp", __name__)
 
