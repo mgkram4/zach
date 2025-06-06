@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:testsdk/pages/daily.dart';
+import 'package:testsdk/pages/login.dart';
 import 'package:testsdk/pages/page1.dart';
 import 'package:testsdk/pages/page2.dart';
 import 'package:testsdk/pages/post_page.dart';
@@ -62,7 +63,7 @@ class HomePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PostPage(userId: user?.uid ?? '')),
+                builder: (context) =>LoginPage()),
           );
         },
         backgroundColor: Colors.amber,

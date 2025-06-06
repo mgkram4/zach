@@ -9,7 +9,7 @@ class StorageService {
   final String baseUrl;
   final Dio dio;
 
-  StorageService({String environment = 'local'})
+  StorageService({String environment = 'aws'})
       : baseUrl = _getBaseUrl(environment),
         dio = Dio() {
     dio.options.connectTimeout = const Duration(seconds: 30);
@@ -23,7 +23,7 @@ class StorageService {
             ? 'http://10.0.2.2:8000'
             : 'http://localhost:8000';
       case 'aws':
-        return 'http://13.57.218.69:8000';
+        return 'http://54.193.20.57:5000';
       default:
         throw ArgumentError('Invalid environment: $environment');
     }

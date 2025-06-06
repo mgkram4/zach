@@ -9,10 +9,13 @@ import 'package:testsdk/pages/page2.dart';
 import 'package:testsdk/pages/post_page.dart';
 import 'package:testsdk/pages/sign_up_page.dart';
 import 'package:testsdk/services/auth_service.dart';
+import 'package:testsdk/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
