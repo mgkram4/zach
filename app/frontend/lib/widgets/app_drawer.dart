@@ -53,14 +53,14 @@ class AppDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/page2');
             },
           ),
-          _buildDrawerItem(
-            context,
-            icon: Icons.post_add,
-            text: 'Post',
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/post');
-            },
-          ),
+          // _buildDrawerItem(
+          //   context,
+          //   icon: Icons.post_add,
+          //   text: 'Post',
+          //   onTap: () {
+          //     Navigator.pushReplacementNamed(context, '/post');
+          //   },
+          // ),
           _buildDrawerItem(
             context,
             icon: Icons.emoji_events,

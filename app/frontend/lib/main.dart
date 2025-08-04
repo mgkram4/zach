@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         page1Route: (context) => Page1(),
         page2Route: (context) => Page2(),
         signUpRoute: (context) => const SignUpPage(),
-        postRoute: (context) => const PostPage(userId: '',),
+        postRoute: (contexst) => const PostPage(userId: '',),
         dailyRoute: (context) => DailyChallengesPage(),
       },
       home: const AuthWrapper(),

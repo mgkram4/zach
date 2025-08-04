@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
           );
         },
         backgroundColor: Colors.amber,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.logout, color: Colors.white),
       ),
     );
   }
@@ -190,15 +190,15 @@ class HomePage extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.all(16),
         children: [
-          _buildFeatureCard('Post a Shot', Icons.add_a_photo, Colors.amber, () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const PostPage(
-                        userId: '',
-                      )),
-            );
-          }),
+          // _buildFeatureCard('Post a Shot', Icons.add_a_photo, Colors.amber, () {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => const PostPage(
+          //               userId: '',
+          //             )),
+          //   );
+          // }),
           _buildFeatureCard('History', Icons.history, Colors.purple, () {
             Navigator.push(
               context,
